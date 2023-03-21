@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "@hookform/resolvers": "^3.0.0",
+    "@types/styled-components": "^5.1.26",
+    "react-hook-form": "^7.43.7",
+    "react-icons": "^4.8.0",
+    "react-router-dom": "5",
+    "yup": "^1.0.2"
+  }
+}
