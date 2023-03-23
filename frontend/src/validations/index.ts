@@ -1,6 +1,6 @@
 import * as yup from 'yup'
 
-export const RegisterSchema = yup.object().shape({
+export const RegisterUserSchema = yup.object().shape({
     name: yup.string().required('Nome obrigatório'),
     email: yup
     .string()
@@ -18,5 +18,14 @@ export const RegisterSchema = yup.object().shape({
         [yup.ref('password')],
         'Confirmação de senha deve ser identica a senha'
     ),
+    phone: yup.string().required('Contato obrigatório'),
+})
+
+export const RegisterContactSchema = yup.object().shape({
+    name: yup.string().required('Nome obrigatório'),
+    email: yup
+    .string()
+    .required('E-mail obrigatório')
+    .email('Informe um E-mail válido'),
     phone: yup.string().required('Contato obrigatório'),
 })

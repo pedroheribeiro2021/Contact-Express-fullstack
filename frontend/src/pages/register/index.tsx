@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import { RegisterSchema } from "../../validations"
+import { RegisterUserSchema } from "../../validations"
 import { useForm } from "react-hook-form"
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useContext } from "react";
@@ -22,12 +22,11 @@ export const Register = () => {
         handleSubmit,
         formState: {errors},
     } = useForm<iDataRegister>({
-        resolver: yupResolver(RegisterSchema)
+        resolver: yupResolver(RegisterUserSchema)
     })
 
     const submit = async (data: iDataRegister) => {
         userRegister(data)
-        // console.log(data)
     }
 
     return (
