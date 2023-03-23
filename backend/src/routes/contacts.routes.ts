@@ -6,6 +6,6 @@ import { ensureAuthMiddleware } from "../middlewares/ensureAuth.middleware"
 export const contactsRoutes = Router()
 
 contactsRoutes.post('', ensureAuthMiddleware, createContactController)
-contactsRoutes.get('', listContactController)
-contactsRoutes.patch('/:id', updateContactController)
-contactsRoutes.delete('/:id', deleteContactController)
+contactsRoutes.get('/:id', listContactController)
+contactsRoutes.patch('/:id', ensureAuthMiddleware, updateContactController)
+contactsRoutes.delete('/:id', ensureAuthMiddleware, deleteContactController)

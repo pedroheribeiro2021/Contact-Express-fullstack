@@ -7,17 +7,18 @@ import 'dotenv/config'
 import { Repository } from 'typeorm'
 import { AppError } from '../../errors/AppError'
 
-export const createSessionService = async ({email, password}: IUserLogin): Promise<string> => {
+export interface ILoginResponse {
+    token: string
+    id: string
+}
+
+export const createSessionService = async ({email, password}: IUserLogin): Promise<any> => {
 
     const userRepository: Repository<User> = AppDataSource.getRepository(User)
 
     const user: any = await userRepository.findOneBy({
         email: email
     })
-
-    // if(!user.isActive) {
-    //     throw new AppError('User is not active', 400)
-    // }
     
     if(!user){
         throw new AppError('User or password invalid', 403)
@@ -40,5 +41,10 @@ export const createSessionService = async ({email, password}: IUserLogin): Promi
         }
     )
 
-    return token
+    const id = user.id
+
+    return {
+        token,
+        id
+    }
 }
