@@ -12,16 +12,16 @@ interface iContactProps {
     children: ReactNode;
 }
 
-interface iDataTech {
-    title: string;
-    status: string;
+interface iContactRegister {
+    name: string;
+    email: string;
+    phone: string;
 }
-
 interface iContactContext {
     // user: iUser | null;
     // setUser: React.Dispatch<React.SetStateAction<iUser | null>>;
     // techs: iTechs[];
-    contactRegister: (data: iDataTech) => void;
+    contactRegister: (data: iContactRegister) => void;
     // updateTechs: (id: string, data: iUpdate) => void;
     // getUser: () => void;
     // removeTechs: (id: string) => void;
@@ -87,7 +87,7 @@ export const ContactProvider = ({children}: iContactProps) => {
     //     getUser()
     // }, [techs])
 
-    const contactRegister = (data: iDataTech) => {
+    const contactRegister = (data: iContactRegister) => {
 
         const token = localStorage.getItem('@token')
 
@@ -96,7 +96,7 @@ export const ContactProvider = ({children}: iContactProps) => {
             headers: {Authorization:'Bearer ' + token}
            })
            .then((resp) => {
-            console.log(data)
+            console.log(resp)
             // setTechs(resp.data)
             // const newData = [...techs,{
             //     id: resp.data.id,

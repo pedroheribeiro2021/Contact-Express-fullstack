@@ -1,6 +1,9 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
+import { ContactContext } from "../../context/contactContext";
 import { RegisterContactSchema } from "../../validations";
+import { useContext } from "react"
+import { useHistory } from "react-router-dom";
 
 interface iContactRegister {
     name: string;
@@ -10,6 +13,8 @@ interface iContactRegister {
 
 export const Dashboard = () => {
 
+    const { contactRegister } = useContext(ContactContext)
+ 
     const {
         register, 
         handleSubmit,
@@ -23,9 +28,18 @@ export const Dashboard = () => {
         // console.log(data)
     }
 
+    const history = useHistory()
+
+    const logOut = () => {
+        // setUser(null)
+        localStorage.clear()
+        history.push('/')
+    }
+
     return (
         <section>
             <h2>Dashboard</h2>
+            <button onClick={logOut}>Sair</button>
         <form onSubmit={handleSubmit(submit)}>
                 <h3>Cadastre seu contato</h3>        
                 <label htmlFor="name">Nome</label>
@@ -41,8 +55,4 @@ export const Dashboard = () => {
             </form>
         </section>
     )
-}
-
-function contactRegister(data: iContactRegister) {
-    throw new Error("Function not implemented.");
 }
