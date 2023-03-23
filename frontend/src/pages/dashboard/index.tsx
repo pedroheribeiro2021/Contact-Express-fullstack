@@ -19,8 +19,8 @@ export const Dashboard = () => {
     })
 
     const submit = async (data: iContactRegister) => {
-        // contactRegister(data)
-        console.log(data)
+        contactRegister(data)
+        // console.log(data)
     }
 
     return (
@@ -41,4 +41,8 @@ export const Dashboard = () => {
             </form>
         </section>
     )
+}
+
+function contactRegister(data: iContactRegister) {
+    throw new Error("Function not implemented.");
 }
