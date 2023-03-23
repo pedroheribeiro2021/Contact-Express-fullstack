@@ -13,7 +13,7 @@ interface iContactRegister {
 
 export const Dashboard = () => {
 
-    const { contactRegister } = useContext(ContactContext)
+    const { user, setUser, contacts, contactRegister } = useContext(ContactContext)
  
     const {
         register, 
@@ -53,6 +53,27 @@ export const Dashboard = () => {
                 <p>{errors.phone?.message}</p>
                 <button type='submit'>Cadastrar</button>
             </form>
+            <div>
+                <h3>Olá, {user?.name} </h3>
+            </div>
+            <div>
+                <h3>Contatos:</h3>
+                <ul>
+                    {
+                        contacts.length ? (
+                            contacts.map((contacts, i) =>
+                            <li key={i} id={contacts.id}>
+                                <h3>{contacts.name}</h3>
+                                <h3>{contacts.email}</h3>
+                                <h3>{contacts.phone}</h3>
+                            </li>
+                            )
+                        ) : (
+                            <li></li>
+                        )
+                    }
+                </ul>
+            </div>
         </section>
     )
 }

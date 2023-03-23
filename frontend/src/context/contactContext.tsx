@@ -1,4 +1,5 @@
 import { AxiosError } from 'axios';
+import { AnyARecord } from 'dns';
 import { ReactNode, useContext, useEffect, useState } from 'react'
 import { createContext } from 'react'
 // import { toast } from 'react-toastify';
@@ -18,36 +19,29 @@ interface iContactRegister {
     phone: string;
 }
 interface iContactContext {
-    // user: iUser | null;
-    // setUser: React.Dispatch<React.SetStateAction<iUser | null>>;
-    // techs: iTechs[];
+    user: iUser | null;
+    setUser: React.Dispatch<React.SetStateAction<iUser | null>>;
+    contacts: iContact[];
     contactRegister: (data: iContactRegister) => void;
     // updateTechs: (id: string, data: iUpdate) => void;
     // getUser: () => void;
     // removeTechs: (id: string) => void;
 }
 
-// interface iTechs {
-//     id: string;
-//     title: string;
-//     status: string;
-//     created_at: string;
-//     updated_at: string;
-//     user: {
-//         id: string
-//     }
-// }
+interface iContact {
+    id: string
+    name: string;
+    email: string;
+    phone: string;
+}
 
-// interface iUser {
-//     id: string,
-// 	name: string,
-// 	email: string,
-// 	course_module: string,
-// 	bio: string,
-// 	contact: string,
-// 	techs: [],
-// 	works: [],
-// }
+interface iUser {
+    id: string;
+	name: string;
+	email: string;
+	contacts: iContact[];
+    
+}
 
 // interface iUpdate {
 //     status: string;
@@ -58,34 +52,34 @@ export const ContactContext = createContext<iContactContext>({} as iContactConte
 
 export const ContactProvider = ({children}: iContactProps) => {
 
-    // const [loading, setLoading] = useState(false)
-    // const [techs, setTechs] = useState /* <iTechs[]> */ ([] as iTechs[])
-    // const [user, setUser] = useState<iUser | null>(null)
+    const [loading, setLoading] = useState(false)
+    const [contacts, setContacts] = useState ([] as iContact[])
+    const [user, setUser] = useState<iUser | null>(null)
     
-    // useEffect(() => {
+    useEffect(() => {
 
-    //     const getUser = async () => {
+        const getUser = async () => {
 
-    //         const id = localStorage.getItem('@id')
+            const id = localStorage.getItem('@id')
 
-    //         try {
-    //             setLoading(true)
-    //              const response = await api.get(`/users/${id}`)
-    //             .then((resp) => {
-    //                 setUser(resp.data)
-    //                 setTechs(resp.data.techs)
-    //                 // console.log(user)
-    //             })
-    //             return response
-    //         } catch (error) {
-    //             console.log(error)
-    //         }
-    //         finally {
-    //             setLoading(false)  
-    //         }
-    //     }
-    //     getUser()
-    // }, [techs])
+            try {
+                setLoading(true)
+                 const response = await api.get(`/user/${id}`)
+                .then((resp) => {
+                    setUser(resp.data)
+                    setContacts(resp.data.contacts)
+                    console.log(user)
+                })
+                return response
+            } catch (error) {
+                console.log(error)
+            }
+            finally {
+                setLoading(false)  
+            }
+        }
+        getUser()
+    }, [contacts])
 
     const contactRegister = (data: iContactRegister) => {
 
@@ -95,20 +89,21 @@ export const ContactProvider = ({children}: iContactProps) => {
            api.post(`/contact`, data, {
             headers: {Authorization:'Bearer ' + token}
            })
-           .then((resp) => {
+           .then((resp:any) => {
             console.log(resp)
-            // setTechs(resp.data)
-            // const newData = [...techs,{
-            //     id: resp.data.id,
-            //     title: resp.data.title,
-            //     status: resp.data.status,
+            setContacts(resp.data)
+            const newData = [...contacts,{
+                id: resp.data.id,
+                name: resp.data.name,
+                email: resp.data.email,
+                phone: resp.data.phone,
             //     created_at: resp.data.created_at,
             //     updated_at: resp.data.update_at,
             //     user: {
             //         id: resp.data.user.id,
-            //     }
-            // }]
-            // setTechs(newData)
+                // }
+            }]
+            // setContacts(newData)
         })
         } catch (error) {
             // const requestError = error as AxiosError<iApiError>
@@ -151,10 +146,10 @@ export const ContactProvider = ({children}: iContactProps) => {
 
     return (
         <ContactContext.Provider value={{
-            // user,
-            // setUser, 
-            // techs,
-            contactRegister
+            user,
+            setUser, 
+            contacts,
+            contactRegister,
             // updateTechs,
             // getUser,
             // removeTechs
