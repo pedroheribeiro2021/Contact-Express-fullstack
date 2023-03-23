@@ -7,11 +7,13 @@ export const userSerializer: SchemaOf<IUserRequest> = yup.object().shape({
     name: yup.string().required(),
     email: yup.string().email().required(),
     password: yup.string().required(),
+    phone: yup.string().required(),
 })
 
 export const userWithoutPasswordSerializer: SchemaOf<IUser> = yup.object().shape({
     updatedAt: yup.date().required(),
     createdAt: yup.date().required(),
+    phone: yup.string().required(),
     email: yup.string().email().required(),
     name: yup.string().required(),
     id: yup.string().required(),
@@ -20,5 +22,6 @@ export const userWithoutPasswordSerializer: SchemaOf<IUser> = yup.object().shape
 export const updateUserSerializer: SchemaOf<IUserUpdate> = yup.object().shape({
     name: yup.string().notRequired(),
     email: yup.string().email().notRequired(),
-    password: yup.string().notRequired()
+    password: yup.string().notRequired(),
+    phone: yup.string().notRequired(),
 })

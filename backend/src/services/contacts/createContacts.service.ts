@@ -17,6 +17,7 @@ export const createContactsService = async(data:IContactRequest, userId: string)
     const contact = contactsRepository.create({
         name: data.name,
         email: data.email,
+        phone: data.phone,
         user: user,
     })
 
