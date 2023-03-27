@@ -7,7 +7,7 @@ export const listUsersServices = async (userId: string): Promise<any> => {
 
     const userRepository = AppDataSource.getRepository(User)
 
-    const user = await userRepository.find({
+    const user = await userRepository.findOne({
         where: {
             id: userId
         },
