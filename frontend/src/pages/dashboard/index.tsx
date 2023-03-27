@@ -14,7 +14,7 @@ interface iContactRegister {
 export const Dashboard = () => {
 
     const { user, setUser, contacts, contactRegister } = useContext(ContactContext)
- 
+    console.log(user?.name)
     const {
         register, 
         handleSubmit,
@@ -25,7 +25,8 @@ export const Dashboard = () => {
 
     const submit = async (data: iContactRegister) => {
         contactRegister(data)
-        // console.log(data)
+        console.log(user?.name)
+        console.log(contacts)
     }
 
     const history = useHistory()
@@ -59,8 +60,7 @@ export const Dashboard = () => {
             <div>
                 <h3>Contatos:</h3>
                 <ul>
-                    {
-                        contacts.length ? (
+                    {/* {
                             contacts.map((contacts, i) =>
                             <li key={i} id={contacts.id}>
                                 <h3>{contacts.name}</h3>
@@ -68,10 +68,7 @@ export const Dashboard = () => {
                                 <h3>{contacts.phone}</h3>
                             </li>
                             )
-                        ) : (
-                            <li></li>
-                        )
-                    }
+                    } */}
                 </ul>
             </div>
         </section>

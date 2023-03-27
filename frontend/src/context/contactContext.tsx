@@ -69,6 +69,7 @@ export const ContactProvider = ({children}: iContactProps) => {
                     setUser(resp.data)
                     setContacts(resp.data.contacts)
                     console.log(user)
+                    console.log(contacts)
                 })
                 return response
             } catch (error) {
@@ -90,20 +91,20 @@ export const ContactProvider = ({children}: iContactProps) => {
             headers: {Authorization:'Bearer ' + token}
            })
            .then((resp:any) => {
-            console.log(resp)
-            setContacts(resp.data)
-            const newData = [...contacts,{
-                id: resp.data.id,
-                name: resp.data.name,
-                email: resp.data.email,
-                phone: resp.data.phone,
-            //     created_at: resp.data.created_at,
-            //     updated_at: resp.data.update_at,
-            //     user: {
-            //         id: resp.data.user.id,
-                // }
-            }]
+                console.log(resp.data)
+                console.log(data)
+               setContacts(resp.data)
+            // const newData = [...contacts,{
+            //     id: resp.data.id,
+            //     name: resp.data.name,
+            //     email: resp.data.email,
+            //     phone: resp.data.phone,
+                // created_at: resp.data.created_at,
+                // updated_at: resp.data.update_at,
+            // }]
+            // console.log(newData)
             // setContacts(newData)
+            console.log(contacts)
         })
         } catch (error) {
             // const requestError = error as AxiosError<iApiError>
