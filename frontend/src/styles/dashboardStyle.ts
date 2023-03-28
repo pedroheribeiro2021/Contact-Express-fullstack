@@ -61,6 +61,11 @@ export const DashboardStyle = styled.section`
         align-items: center;
         gap: 30px;
         overflow-x: auto;
+
+        .empty-list {
+            color: var(--color4);
+            font-size: 40px;
+        }
     }
 
     ul::-webkit-scrollbar {
@@ -81,7 +86,6 @@ export const DashboardStyle = styled.section`
         display: flex;
         align-items: center;
         width: 85%;
-        /* margin-left: 150px; */
         background-color: var(--color2);
         border-radius: 5px;
 

@@ -94,8 +94,7 @@ export const Dashboard = () => {
             </form>
             </ReactModal>
             <div className="apresentation">
-                {/* <h3>Olá, {user?.name} </h3> */}
-                <h3>Olá, fulano!</h3>
+                <h3>Olá, {user?.name} </h3>
             </div>
             <div className="contacts">
                 <h3 className="contacts-title">Aqui estão seus contatos:</h3>
@@ -117,16 +116,9 @@ export const Dashboard = () => {
                                 </li>
                             )
                         ) : (
-                            <li></li>
+                            <h3 className="empty-list">Sua lista de contatos está vazia! :( </h3>
                         )
                     }
-                    <li>
-                        <h3>Pedro</h3>
-                            <h3>pedro@mail.com</h3>
-                            <h3>61992514712</h3>
-                            <FaTrash className="icon"/>
-                            <AiFillEdit className="icon" onClick={() => setUpdateModalIsOpen(true)}/>
-                    </li>
                 </ul>
             </div>
             <ReactModal
