@@ -2,7 +2,7 @@ import { AxiosError } from 'axios';
 import { AnyARecord } from 'dns';
 import { ReactNode, useContext, useEffect, useState } from 'react'
 import { createContext } from 'react'
-// import { toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { api } from '../services/api'
 
 interface iApiError {
@@ -23,9 +23,9 @@ interface iContactContext {
     setUser: React.Dispatch<React.SetStateAction<iUser | null>>;
     contacts: iContact[];
     contactRegister: (data: iContactRegister) => void;
-    // updateTechs: (id: string, data: iUpdate) => void;
+    updateContacts: (id: string, data: iUpdate) => void;
     // getUser: () => void;
-    // removeTechs: (id: string) => void;
+    removeContacts: (id: string) => void;
 }
 
 interface iContact {
@@ -40,12 +40,13 @@ interface iUser {
 	name: string;
 	email: string;
 	contacts: iContact[];
-    
 }
 
-// interface iUpdate {
-//     status: string;
-// }
+interface iUpdate {
+    name: string;
+    email: string;
+    phone: string;
+}
 
 
 export const ContactContext = createContext<iContactContext>({} as iContactContext)
@@ -65,11 +66,9 @@ export const ContactProvider = ({children}: iContactProps) => {
             try {
                 setLoading(true)
                  const response = await api.get(`/user/${id}`)
-                .then((resp) => {
+                .then((resp:any) => {
                     setUser(resp.data)
                     setContacts(resp.data.contacts)
-                    console.log(user)
-                    console.log(contacts)
                 })
                 return response
             } catch (error) {
@@ -80,7 +79,7 @@ export const ContactProvider = ({children}: iContactProps) => {
             }
         }
         getUser()
-    }, [contacts])
+    }, [])
 
     const contactRegister = (data: iContactRegister) => {
 
@@ -91,59 +90,42 @@ export const ContactProvider = ({children}: iContactProps) => {
             headers: {Authorization:'Bearer ' + token}
            })
            .then((resp:any) => {
-                console.log(resp.data)
-                console.log(data)
                setContacts(resp.data)
-            // const newData = [...contacts,{
-            //     id: resp.data.id,
-            //     name: resp.data.name,
-            //     email: resp.data.email,
-            //     phone: resp.data.phone,
-                // created_at: resp.data.created_at,
-                // updated_at: resp.data.update_at,
-            // }]
-            // console.log(newData)
-            // setContacts(newData)
-            console.log(contacts)
+               toast.success('Cadastro incluído com sucesso!')
+                window.location.reload()
         })
         } catch (error) {
-            // const requestError = error as AxiosError<iApiError>
+            const requestError = error as AxiosError<iApiError>
             console.log(error)
-            // toast.error(requestError.response?.data.message, {
-            //     position: "top-right",
-            //     autoClose: 2000,
-            //     hideProgressBar: false,
-            //     closeOnClick: true,
-            //     pauseOnHover: true,
-            //     draggable: true,
-            //     progress: undefined,
-            // })
+            toast.error(requestError.response?.data.message)
         }
     }
 
-    // const updateTechs = async (id: string, data: iUpdate) => {
+    const updateContacts = async (id: string, data: iUpdate) => {
 
-    //     const token = localStorage.getItem('@token')
+        const token = localStorage.getItem('@token')
 
-    //     try {
-    //         await api.put(`/users/techs/${id}`, data, {
-    //             headers: {Authorization:'Bearer ' + token}
-    //         })
-    //         .then((resp) => console.log(resp))
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-    // }
+        try {
+            await api.put(`/contact/${id}`, data, {
+                headers: {Authorization:'Bearer ' + token}
+            })
+            .then((resp: any) => console.log(resp))
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
-    // const removeTechs = async (id: string) => {
-    //     const techDelete = techs.filter(tech => tech.id !== id)
+    const removeContacts = async (id: string) => {
+        const contactsDelete = contacts.filter(contact => contact.id !== id)
 
-    //     const token = localStorage.getItem('@token')
+        const token = localStorage.getItem('@token')
 
-    //     await api.delete(`/users/techs/${id}`, {
-    //         headers: {Authorization:'Bearer ' + token}
-    //     })
-    // }
+        await api.delete(`/contact/${id}`, {
+            headers: {Authorization:'Bearer ' + token}
+        })
+
+        window.location.reload()
+    }
 
     return (
         <ContactContext.Provider value={{
@@ -151,9 +133,9 @@ export const ContactProvider = ({children}: iContactProps) => {
             setUser, 
             contacts,
             contactRegister,
-            // updateTechs,
+            updateContacts,
             // getUser,
-            // removeTechs
+            removeContacts
             }}>
                 {children}
         </ContactContext.Provider>

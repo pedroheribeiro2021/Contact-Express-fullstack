@@ -13,10 +13,16 @@
     "axios": "^1.3.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-modal": "^3.16.1",
     "react-router-dom": "5",
     "react-scripts": "5.0.1",
+    "react-toastify": "^9.1.2",
+    "styled-components": "^5.3.9",
     "typescript": "^4.4.2",
     "web-vitals": "^2.1.0"
+  },
+  "resolutions": {
+    "styled-components": "^5"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -43,6 +49,7 @@
     ]
   },
   "devDependencies": {
+    "@types/react-modal": "^3.13.1",
     "@types/react-router-dom": "^5.3.3"
   }
 }

@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form"
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useContext } from "react";
 import { UserContext } from "../../context/userContext";
+import { RegisterStyle } from "../../styles/registerStyle";
 
 interface iDataRegister {
     name: string;
@@ -30,14 +31,10 @@ export const Register = () => {
     }
 
     return (
-        <section>
-            <div>
-                <h2>Seja bem vindo(a)!</h2>
-                <Link to={'..'}>Voltar</Link>
-            </div>
+        <RegisterStyle>
+            <Link to={'..'} className='link-back'>Voltar</Link>
             <form onSubmit={handleSubmit(submit)}>
-                <h3>Crie sua conta</h3>
-                <span>Rápido e gráits, vamos nessa?!</span>            
+                <h3 className='page-title'>Crie sua conta:</h3>          
                 <label htmlFor="name">Nome</label>
                 <input type="text" id="name" placeholder="Digite aqui seu nome" {...register('name')} />
                 <p>{errors.name?.message}</p>
@@ -55,6 +52,6 @@ export const Register = () => {
                 <p>{errors.phone?.message}</p>
                 <button type='submit'>Cadastrar</button>
             </form>
-        </section>
+        </RegisterStyle>
     )
 }
