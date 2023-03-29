@@ -34,5 +34,6 @@ Para baixar o projeto, você precisará ter instalado em sua máquina as seguint
 2 - No terminal, navegue até a pasta "front-end" do projeto.
 3 - Execute o comando yarn install para instalar as dependências.
 4 - Crie um arquivo .env na raiz da pasta "back-end" e configure as variáveis de ambiente com a URL do servidor de backend.
-5 - Execute o comando yarn start detro da pasta front end para iniciar o servidor de desenvolvimento.
-6 - Acesse a aplicação em seu navegador em http://localhost:3000.
+5 - Execute o comando yarn dev dentro da pasta back end
+6 - Execute o comando yarn start dentro da pasta front end para iniciar o servidor de desenvolvimento.
+7 - Acesse a aplicação em seu navegador em http://localhost:3000.
