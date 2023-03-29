@@ -18,5 +18,5 @@ export const RegisterSchema = yup.object().shape({
         [yup.ref('password')],
         'Confirmação de senha deve ser identica a senha'
     ),
-    contact: yup.string().required('Contato obrigatório'),
+    phone: yup.string().required('Contato obrigatório'),
 })

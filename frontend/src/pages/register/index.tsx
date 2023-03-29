@@ -10,7 +10,7 @@ interface iDataRegister {
     email: string;
     password: string;
     passwordConfirm: string;
-    contact: string;
+    phone: string;
 }
 
 export const Register = () => {
@@ -27,6 +27,7 @@ export const Register = () => {
 
     const submit = async (data: iDataRegister) => {
         userRegister(data)
+        // console.log(data)
     }
 
     return (
@@ -50,9 +51,9 @@ export const Register = () => {
                 <label htmlFor="passwordConfirm">Confirmar senha</label>
                 <input type="password" name="passwordConfirm" id="passwordConfirm" placeholder="Digite aqui seu senha" />
                 <p>{errors.passwordConfirm?.message}</p>
-                <label htmlFor="contact">Contato</label>
-                <input type="tel" id="contact" placeholder="Digite aqui seu telefone" {...register('contact')} />
-                <p>{errors.contact?.message}</p>
+                <label htmlFor="phone">Contato</label>
+                <input type="tel" id="phone" placeholder="Digite aqui seu telefone" {...register('phone')} />
+                <p>{errors.phone?.message}</p>
                 <button type='submit'>Cadastrar</button>
             </form>
         </section>
