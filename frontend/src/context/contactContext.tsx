@@ -20,9 +20,11 @@ interface iContactRegister {
 interface iContactContext {
     user: iUser | null;
     setUser: React.Dispatch<React.SetStateAction<iUser | null>>;
+    contact: iContact | undefined;
+    setContact: React.Dispatch<React.SetStateAction<iContact | undefined>>;
     contacts: iContact[];
     contactRegister: (data: iContactRegister) => void;
-    updateContacts: (id: string, data: iUpdate) => void;
+    updateContacts: (data: iUpdate) => void;
     removeContacts: (id: string) => void;
 }
 
@@ -53,6 +55,7 @@ export const ContactProvider = ({children}: iContactProps) => {
 
     const [contacts, setContacts] = useState ([] as iContact[])
     const [user, setUser] = useState<iUser | null>(null)
+    const [contact, setContact] = useState<iContact | undefined>()
     
     useEffect(() => {
 
@@ -94,18 +97,19 @@ export const ContactProvider = ({children}: iContactProps) => {
         }
     }
 
-    const updateContacts = async (id: string, data: iUpdate) => {
+    const updateContacts = async ( data: iUpdate) => {
 
         const token = localStorage.getItem('@token')
 
         try {
-            await api.put(`/contact/${id}`, data, {
+            await api.patch(`/contact/${contact?.id}`, data, {
                 headers: {Authorization:'Bearer ' + token}
             })
             .then((resp: any) => console.log(resp))
         } catch (error) {
             console.log(error)
         }
+        window.location.reload()
     }
 
     const removeContacts = async (id: string) => {
@@ -124,7 +128,9 @@ export const ContactProvider = ({children}: iContactProps) => {
     return (
         <ContactContext.Provider value={{
             user,
-            setUser, 
+            setUser,
+            contact,
+            setContact,
             contacts,
             contactRegister,
             updateContacts,
