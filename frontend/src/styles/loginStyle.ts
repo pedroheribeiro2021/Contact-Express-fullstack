@@ -2,11 +2,6 @@ import styled from "styled-components";
 
 export const LoginPageStyle = styled.section`
 
-/* display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center; */
-
     form {
         margin-top: 3.5%;
     }

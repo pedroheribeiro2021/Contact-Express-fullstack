@@ -43,6 +43,7 @@ export const UserContext = createContext<iUserContext>({} as iUserContext)
 export const UserProvider = ({children}: iUserProps) => {
 
     const [user, setUser] = useState<iUser | null>(null)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [currentRoute, setCurrentRoute] = useState<string | null>(null)
 
     const history = useHistory()
@@ -51,15 +52,13 @@ export const UserProvider = ({children}: iUserProps) => {
 
         api.post(`/login `, data)
         .then((resp: { data: { user: SetStateAction<iUser | null>; token: string; id: string; }; }) => {
-            console.log(resp.data.user)
             setUser(resp.data.user)
             localStorage.setItem('@token', resp.data.token)
-            console.log(resp.data)
             localStorage.setItem('@id', resp.data.id)
             history.push('/dashboard')
             toast.success('Login efetuado com sucesso!')
         })
-        .catch((err: any) => {
+        .catch((err) => {
             console.log(err)
             toast.error('Erro de credenciais!')
         })
@@ -68,7 +67,7 @@ export const UserProvider = ({children}: iUserProps) => {
     const userRegister = async(data: iDataRegister) => {
 
         await api.post(`/user`, data)
-        .then((resp: any) => {
+        .then((resp) => {
             console.log(resp)
             toast.success('Cadastro efetuado com sucesso!')
             history.push('/')
