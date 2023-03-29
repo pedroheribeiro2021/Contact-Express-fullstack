@@ -1,26 +1,24 @@
 import { BeforeInsert, BeforeUpdate, Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { hashSync } from 'bcryptjs';
 import { Exclude } from "class-transformer";
+import { Contact } from "./contact.user.entity";
 
 
 @Entity('users')
 export class User {
 
     @PrimaryGeneratedColumn('uuid')
-    id: number
+    id: string
 
-    @Column({ length: 45 })
+    @Column({ length: 50 })
     name: string
 
-    @Column({ length: 45, unique: true })
+    @Column({ length: 50, unique: true })
     email: string
 
     @Column({ length: 120 })
     @Exclude()
     password: string
-
-    @Column({ type: 'date', nullable: true })
-    birthDate: string
 
     @CreateDateColumn()
     createdAt: string
@@ -31,8 +29,8 @@ export class User {
     @DeleteDateColumn()
     deletedAt: string
 
-    // @OneToMany(() =>)
-    // contacts:
+    @OneToMany(() => Contact, contacts => contacts.user)
+    contacts: Contact[]
 
     @BeforeUpdate()
     @BeforeInsert()
