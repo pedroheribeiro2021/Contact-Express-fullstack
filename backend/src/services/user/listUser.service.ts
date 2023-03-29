@@ -3,11 +3,18 @@ import { User } from "../../entities/client.user.entity"
 
 
 
-export const listUsersServices = async (): Promise<User[]> => {
+export const listUsersServices = async (userId: string): Promise<any> => {
 
     const userRepository = AppDataSource.getRepository(User)
-    
-    const users = await userRepository.find()
 
-    return users
+    const user = await userRepository.findOne({
+        where: {
+            id: userId
+        },
+        relations: {
+            contacts: true
+        }
+    })
+
+    return user
 }
