@@ -1,5 +1,4 @@
 import { AxiosError } from 'axios';
-import { AnyARecord } from 'dns';
 import { ReactNode, useContext, useEffect, useState } from 'react'
 import { createContext } from 'react'
 import { toast } from 'react-toastify';
@@ -24,7 +23,6 @@ interface iContactContext {
     contacts: iContact[];
     contactRegister: (data: iContactRegister) => void;
     updateContacts: (id: string, data: iUpdate) => void;
-    // getUser: () => void;
     removeContacts: (id: string) => void;
 }
 
@@ -53,7 +51,6 @@ export const ContactContext = createContext<iContactContext>({} as iContactConte
 
 export const ContactProvider = ({children}: iContactProps) => {
 
-    const [loading, setLoading] = useState(false)
     const [contacts, setContacts] = useState ([] as iContact[])
     const [user, setUser] = useState<iUser | null>(null)
     
@@ -64,7 +61,6 @@ export const ContactProvider = ({children}: iContactProps) => {
             const id = localStorage.getItem('@id')
 
             try {
-                setLoading(true)
                  const response = await api.get(`/user/${id}`)
                 .then((resp:any) => {
                     setUser(resp.data)
@@ -73,9 +69,6 @@ export const ContactProvider = ({children}: iContactProps) => {
                 return response
             } catch (error) {
                 console.log(error)
-            }
-            finally {
-                setLoading(false)  
             }
         }
         getUser()
@@ -89,7 +82,7 @@ export const ContactProvider = ({children}: iContactProps) => {
            api.post(`/contact`, data, {
             headers: {Authorization:'Bearer ' + token}
            })
-           .then((resp:any) => {
+           .then((resp) => {
                setContacts(resp.data)
                toast.success('Cadastro incluído com sucesso!')
                 window.location.reload()
@@ -116,6 +109,7 @@ export const ContactProvider = ({children}: iContactProps) => {
     }
 
     const removeContacts = async (id: string) => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const contactsDelete = contacts.filter(contact => contact.id !== id)
 
         const token = localStorage.getItem('@token')
@@ -134,7 +128,6 @@ export const ContactProvider = ({children}: iContactProps) => {
             contacts,
             contactRegister,
             updateContacts,
-            // getUser,
             removeContacts
             }}>
                 {children}

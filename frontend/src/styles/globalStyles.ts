@@ -1,7 +1,4 @@
 import { createGlobalStyle } from "styled-components";
-import cover from '../assets/cover.jpg'
-
-
 
 export const GlobalStyle = createGlobalStyle`
 
@@ -66,7 +63,6 @@ h3 {
 form {
     background-color: var(--color2);
     
-    /* height: 40vh; */
     width: 35%;
     margin: auto;
 
@@ -78,8 +74,6 @@ form {
     border-radius: 8px;
 
     opacity: 0.8;
-
-    /* box-shadow: 5px 10px 8px #b7ae8f; */
 }
 
 input {
@@ -108,14 +102,4 @@ button:hover {
 .page-title {
     font-size: 25px;
 }
-
-ul {
-    /* background-color: var(--color2); */
-    /* width: 35%; */
-}
-
-li {
-    text-align: center;
-}
-
 `

@@ -1,4 +1,3 @@
-import './App.css';
 import { ToastContainer } from 'react-toastify';
 import { Route } from 'react-router-dom';
 import { Login } from './pages/login';
@@ -7,8 +6,7 @@ import { Dashboard } from './pages/dashboard';
 import { Providers } from './components/providers/providers';
 import 'react-toastify/dist/ReactToastify.css';
 import { Header } from './pages/head';
-const contacts = require('./assets/network.png');
-const cover = require('./assets/cover.jpg');
+import cover from './assets/cover.jpg';
 
 
 function App() {
@@ -16,8 +14,6 @@ function App() {
     <main>
       <Providers>
         <Header/>
-        {/* <img src={contacts} alt="" className='img1'/> */}
-        {/* <img src={contacts} alt="" className='img2'/> */}
         <img src={cover} alt="" className='cover'/>
         <Route exact path="/">
           <Login/>
@@ -39,7 +35,7 @@ function App() {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme="dark"
+        theme="light"
       />
     </main>
   );
