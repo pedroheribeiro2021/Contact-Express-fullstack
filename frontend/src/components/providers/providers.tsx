@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { ContactProvider } from "../../context/contactContext";
 import { UserProvider } from "../../context/userContext";
 
 interface iProvidersProps {
@@ -9,7 +10,9 @@ export const Providers = ({children}: iProvidersProps) => {
 
     return (
         <UserProvider>
-            {children}
+            <ContactProvider>
+                {children}
+            </ContactProvider>
         </UserProvider>
     )
 }

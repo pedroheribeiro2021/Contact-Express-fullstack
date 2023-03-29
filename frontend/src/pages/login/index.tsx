@@ -1,14 +1,30 @@
 import * as yup from 'yup'
+import { api } from '../../services/api'
 import { Link } from "react-router-dom"
 import { AiFillEye } from 'react-icons/ai';
 import { useForm } from 'react-hook-form'
 import {yupResolver} from '@hookform/resolvers/yup'
-import { useContext } from "react";
+import { ReactNode, useContext, useEffect, useState } from "react";
 import { UserContext } from "../../context/userContext";
+import { LoginPageStyle } from '../../styles/loginStyle'
 
 interface iDataLogin {
     email: string;
     password: string;
+}
+
+interface iUser {
+    id: string;
+	name: string;
+	email: string;
+	contacts: iContact[];
+}
+
+interface iContact {
+    id: string
+    name: string;
+    email: string;
+    phone: string;
 }
 
 const formSchema = yup.object().shape({
@@ -31,19 +47,47 @@ export const Login = () => {
         userLogin(data)
     }
 
+    const [loading, setLoading] = useState(false)
+    const [contacts, setContacts] = useState ([] as iContact[])
+    const [user, setUser] = useState<iUser | null>(null)
+    
+    useEffect(() => {
+
+        const getUser = async () => {
+
+            const id = localStorage.getItem('@id')
+
+            try {
+                setLoading(true)
+                 const response = await api.get(`/user/${id}`)
+                .then((resp:any) => {
+                    setUser(resp.data)
+                    setContacts(resp.data.contacts)
+                })
+                return response
+            } catch (error) {
+                console.log(error)
+            }
+            finally {
+                setLoading(false)  
+            }
+        }
+        getUser()
+    }, [])
+
     return (
-        <section>
+        <LoginPageStyle>
             <form onSubmit={handleSubmit(submit)}>
-            <h3>Login</h3>
+            <h3 className='page-title'>Login</h3>
                 <label htmlFor="email">Email</label>
                 <input type="email" id="email" placeholder="Digite seu E-mail"{...register('email')}/>
                 <label htmlFor="password">Senha</label>
                 <input type="password" id="password" placeholder="Senha"{...register('password')}/>
-                <AiFillEye/>
+                <AiFillEye className='eye' onClick={() => console.log('clicou')}/>
                 <button className='btn1' type="submit">Entrar</button>
                 <span>Ainda não possui uma conta?</span>
-                <Link to={'/register'} >Cadastre-se</Link>
+                <Link to={'/register'} className='register-link'>Cadastre-se</Link>
             </form>
-        </section>
+        </LoginPageStyle>
     )
 }

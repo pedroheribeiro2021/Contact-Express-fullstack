@@ -2,6 +2,7 @@ import { AxiosError } from "axios";
 import { createContext, ReactNode, SetStateAction, useContext, useState } from "react";
 import { api } from "../services/api";
 import { useHistory } from "react-router-dom"
+import { toast } from 'react-toastify';
 
 interface iApiError {
     message: string;
@@ -49,64 +50,33 @@ export const UserProvider = ({children}: iUserProps) => {
     const userLogin = (data: iDataLogin) => {
 
         api.post(`/login `, data)
-        .then((resp) => {
+        .then((resp: { data: { user: SetStateAction<iUser | null>; token: string; id: string; }; }) => {
             console.log(resp.data.user)
             setUser(resp.data.user)
             localStorage.setItem('@token', resp.data.token)
-            // localStorage.setItem('@id', resp.data.user.id)
+            console.log(resp.data)
+            localStorage.setItem('@id', resp.data.id)
             history.push('/dashboard')
-            // toast.success('Login efetuado com sucesso!', {
-            //     position: "top-right",
-            //     autoClose: 2000,
-            //     hideProgressBar: false,
-            //     closeOnClick: true,
-            //     pauseOnHover: true,
-            //     draggable: true,
-            //     progress: undefined,
-            // })
+            toast.success('Login efetuado com sucesso!')
         })
-        .catch((err) => {
+        .catch((err: any) => {
             console.log(err)
-            // toast.error('Erro de credenciais!', {
-            //     position: "top-right",
-            //     autoClose: 2000,
-            //     hideProgressBar: false,
-            //     closeOnClick: true,
-            //     pauseOnHover: true,
-            //     draggable: true,
-            //     progress: undefined,
-            //     })
+            toast.error('Erro de credenciais!')
         })
     }
 
     const userRegister = async(data: iDataRegister) => {
 
         await api.post(`/user`, data)
-        .then((resp) => {
+        .then((resp: any) => {
             console.log(resp)
-            // toast.success('Cadastro efetuado com sucesso!', {
-            //     position: "top-right",
-            //     autoClose: 2000,
-            //     hideProgressBar: false,
-            //     closeOnClick: true,
-            //     pauseOnHover: true,
-            //     draggable: true,
-            //     progress: undefined,
-            // })
+            toast.success('Cadastro efetuado com sucesso!')
             history.push('/')
         })
-        .catch((err) => {
-            // const requestError = err as AxiosError<iApiError>
+        .catch((err: AxiosError<iApiError, any>) => {
+            const requestError = err as AxiosError<iApiError>
             console.log(err)
-            // toast.error(requestError.response?.data.message, {
-            //     position: "top-right",
-            //     autoClose: 2000,
-            //     hideProgressBar: false,
-            //     closeOnClick: true,
-            //     pauseOnHover: true,
-            //     draggable: true,
-            //     progress: undefined,
-            //     })
+            toast.error(requestError.response?.data.message)
         })
     }
 
