@@ -24,24 +24,24 @@ export const createSessionService = async ({email, password}: IUserLogin): Promi
         throw new AppError('User or password invalid', 403)
     }
 
-    const passwordMatch = compare(password, user.password)
+    const passwordMatch = await compare(password, user.password)
 
     if(!passwordMatch){
         throw new AppError('User or password invalid', 403)
     }
 
-    const token = jwt.sign(
+    const token:string = jwt.sign(
         {
             email: user.email
         },
         process.env.SECRET_KEY!,
         {
-            subject: String(user?.id), 
+            subject: String(user.id), 
             expiresIn: '24h'
         }
     )
 
-    const id = user.id
+    let id = user.id
 
     return {
         token,
