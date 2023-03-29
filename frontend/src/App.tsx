@@ -7,9 +7,12 @@ import { Providers } from './components/providers/providers';
 import 'react-toastify/dist/ReactToastify.css';
 import { Header } from './pages/head';
 import cover from './assets/cover.jpg';
+import ReactModal from 'react-modal';
+ReactModal.setAppElement("#root");
 
 
 function App() {
+  ReactModal.setAppElement("#root");  
   return (
     <main>
       <Providers>

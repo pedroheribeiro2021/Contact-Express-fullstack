@@ -102,13 +102,14 @@ export const ContactProvider = ({children}: iContactProps) => {
         const token = localStorage.getItem('@token')
 
         try {
-            await api.put(`/contact/${contact?.id}`, data, {
+            await api.patch(`/contact/${contact?.id}`, data, {
                 headers: {Authorization:'Bearer ' + token}
             })
             .then((resp: any) => console.log(resp))
         } catch (error) {
             console.log(error)
         }
+        window.location.reload()
     }
 
     const removeContacts = async (id: string) => {

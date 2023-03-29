@@ -66,6 +66,7 @@ export const Dashboard = () => {
     const teste = (cont:any) => {
         setUpdateModalIsOpen(true)
         setContact(cont)
+        console.log(cont)
     }
 
     return (
@@ -139,7 +140,7 @@ export const Dashboard = () => {
                         <label htmlFor="phone">Contato</label>
                         <input type="tel" id="phone" placeholder="Digite aqui o telefone do seu contato com DDD" {...register('phone')} />
                         <p>{errors.phone?.message}</p>
-                        <button onClick={closeUpdateModal} >Atualizar</button>
+                        <button type="submit">Atualizar</button>
                     </form>
                 </div>
             </ReactModal>
