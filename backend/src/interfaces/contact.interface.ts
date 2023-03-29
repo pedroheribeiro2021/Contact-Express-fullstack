@@ -1,11 +1,10 @@
-export interface IUserRequest {
+export interface IContactRequest {
     name: string
     email: string
-    password: string
     phone: string
 }
 
-export interface IUser {
+export interface IContact {
     id: string 
     name: string
     email: string
@@ -14,15 +13,8 @@ export interface IUser {
     updatedAt: Date
 }
 
-
-export interface IUserLogin {
-    email: string
-    password: string
-}
-
-export interface IUserUpdate {
+export interface IContactUpdate {
     name?: string
     email?: string
-    password?: string
     phone?: string
 }

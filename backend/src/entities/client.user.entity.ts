@@ -20,6 +20,9 @@ export class User {
     @Exclude()
     password: string
 
+    @Column({ length: 11, unique: true })
+    phone: string
+
     @CreateDateColumn()
     createdAt: string
 
