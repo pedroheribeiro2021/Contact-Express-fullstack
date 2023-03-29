@@ -21,7 +21,7 @@ interface iContactRegister {
 
 export const Dashboard = () => {
 
-    const { user, setUser, contacts, contactRegister, removeContacts, updateContacts } = useContext(ContactContext)
+    const { user, setUser, contacts, contactRegister, removeContacts, updateContacts, contact, setContact } = useContext(ContactContext)
 
     const {
         register, 
@@ -33,8 +33,6 @@ export const Dashboard = () => {
 
     const submit = async (data: iContactRegister) => {
         contactRegister(data)
-
-        console.log(contacts)
     }
 
     const history = useHistory()
@@ -53,10 +51,9 @@ export const Dashboard = () => {
 
     const closeUpdateModal = () => setUpdateModalIsOpen(false)
 
-    const updateSubmit = async (id:string, data: iContactRegister) => {
-        updateContacts(id, data)
-
-        console.log(contacts)
+    const updateSubmit = async (data: iContactRegister) => {
+        console.log(data)
+        updateContacts(data)
     }
 
     const logOut = () => {
@@ -64,6 +61,11 @@ export const Dashboard = () => {
         localStorage.clear()
         toast('bye bye!')
         history.push('/')
+    }
+
+    const teste = (cont:any) => {
+        setUpdateModalIsOpen(true)
+        setContact(cont)
     }
 
     return (
@@ -107,12 +109,7 @@ export const Dashboard = () => {
                                     <h3>{contacts.email}</h3>
                                     <h3>{contacts.phone}</h3>
                                     <FaTrash className="icon" onClick={() => removeContacts(contacts.id)}/>
-                                    <AiFillEdit className="icon" onClick={() => {
-                                        setUpdateModalIsOpen(true)
-                                        setIdstate(contacts.id)
-                                        console.log(idState)
-                                        }
-                                    }/>
+                                    <AiFillEdit className="icon" onClick={() => teste(contacts)}/>
                                 </li>
                             )
                         ) : (
@@ -128,13 +125,13 @@ export const Dashboard = () => {
                         className="modal-content"
             >
                 <div>
-                    <form className='register-form'>
+                    <form className='register-form' onSubmit={handleSubmit(updateSubmit)}>
                         <div className="head">
                             <h3>Atualizar contatos</h3>
                             <span onClick={closeUpdateModal} > X </span>
                         </div>
                         <label htmlFor="name">Nome</label>
-                        <input type="text" id="name" placeholder="Digite aqui o nome do contato" {...register('name')} />
+                        <input type="text" id="name" {...register('name')} />
                         <p>{errors.name?.message}</p>
                         <label htmlFor="">Email</label>
                         <input type="email" id="email" placeholder="Digite aqui o E-mail do contato" {...register('email')} />
