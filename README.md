@@ -1,6 +1,5 @@
 **Contact Express.**
 
-link do deploy: 
 
 Este projeto é uma aplicação fullstack web, desenvolvida por mim, para cadastro de usuários e seus contatos.
 
